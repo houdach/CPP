@@ -4,8 +4,8 @@
 class Fixed
 {
     private:
-    int num1;
-    static const int num2;
+    int FixedPointNum;
+    static const int FractionalBitsNum;
 
     public:
     Fixed();
@@ -13,29 +13,28 @@ class Fixed
     Fixed (const float num);
     Fixed(const int val);
     ~Fixed();
-    bool &operator=(const Fixed &other);
-    bool operator>(const Fixed &other);
-    bool operator<(const Fixed &other);
-    bool operator>=(const Fixed &other);
-    bool operator<=(const Fixed &other);
-    bool operator==(const Fixed &other);
-    bool operator!=(const Fixed &other);
-    //
+    Fixed &operator=(const Fixed &other);
+
+    bool operator>(const Fixed &other) const;
+    bool operator<(const Fixed &other) const;
+    bool operator>=(const Fixed &other) const;
+    bool operator<=(const Fixed &other) const;
+    bool operator==(const Fixed &other) const;
+    bool operator!=(const Fixed &other) const;
+    
     Fixed operator+(const Fixed &other);
     Fixed operator-(const Fixed &other);
     Fixed operator*(const Fixed &other);
     Fixed operator/(const Fixed &other);
-    //
+    
     Fixed &operator++(); 
     Fixed operator++(int); 
     Fixed &operator--(); 
     Fixed operator--(int);
-    //
+    
 
     int getRawBits( void ) const;
     void setRawBits( int const raw );
-    Fixed(const int val);
-    Fixed (const float num);
     float toFloat( void ) const;
     int toInt( void ) const;
     static Fixed &min(Fixed &a, Fixed &b);
@@ -44,5 +43,6 @@ class Fixed
     static const Fixed &max(const Fixed &a, const Fixed &b);
 
 };
+
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 #endif

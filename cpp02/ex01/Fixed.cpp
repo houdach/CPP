@@ -2,22 +2,22 @@
 #include <iostream>
 #include <cmath>
 
-const int Fixed::num2 = 8;
+const int Fixed::FractionalBitsNum = 8;
 
 Fixed::Fixed() {
-    this->num1 = 0;
+    this->FixedPointNum = 0;
     std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed &other) {
     std::cout << "Copy constructor called" << std::endl;
-    this->num1 = other.getRawBits(); // <-- Important
+    this->FixedPointNum = other.getRawBits();
 }
 
 Fixed &Fixed::operator=(const Fixed &other) {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other) {
-        this->num1 = other.getRawBits(); // <-- Important
+        this->FixedPointNum = other.getRawBits();
     }
     return *this;
 }
@@ -27,34 +27,35 @@ Fixed::~Fixed() {
 }
 
 int Fixed::getRawBits(void) const {
-    return this->num1;
+    return this->FixedPointNum;
 }
 
 void Fixed::setRawBits(int const raw) {
-    this->num1 = raw;
+    this->FixedPointNum = raw;
 }
 
 Fixed::Fixed(const int val)
 {
-    this->num1 = val << num2 ;
+    this->FixedPointNum = val << FractionalBitsNum ;
      std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float num)
 {
-    this->num1 = roundf(num * (1 << num2));
+    this->FixedPointNum = roundf(num * (1 << FractionalBitsNum));
      std::cout << "Float constructor called" << std::endl;
 }
 
 float Fixed::toFloat( void ) const
 {
-    return(num1 / (float) (1 << num2));
+    return(FixedPointNum / (float) (1 << FractionalBitsNum));
 }
 
 int Fixed::toInt( void ) const
 {
-    return(num1 / (1 << num2));
+    return(FixedPointNum / (1 << FractionalBitsNum));
 }
+
 
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
 {
