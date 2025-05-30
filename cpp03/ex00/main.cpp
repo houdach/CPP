@@ -2,12 +2,13 @@
 
 int main()
 {
-   ClapTrap a("BotA");
-    a.attack("Target");
-    a.takeDamage(5);
-    a.beRepaired(3);
-    ClapTrap b(a);        
-    ClapTrap c("BotC");
-    c = a;                
+    ClapTrap d("BotD");
+    ClapTrap a("BotA");
+    d.attack("enemy");
+    d.takeDamage(5);
+    d.beRepaired(3);
+    ClapTrap b(a);
+    ClapTrap e("BotE");      
+    e = b;              
     return 0;
 }

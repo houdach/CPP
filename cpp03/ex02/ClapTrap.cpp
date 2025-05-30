@@ -12,7 +12,7 @@ ClapTrap::ClapTrap(std::string name)
 ClapTrap::ClapTrap(const ClapTrap& other)
 {
     *this = other;
-     std::cout<<"ClapTrap copy constructor has been called"<< std::endl;
+     std::cout<<"copy constructor called"<<std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other)
@@ -66,6 +66,6 @@ void ClapTrap::beRepaired(unsigned int amount)
 
 ClapTrap::~ClapTrap()
 {
-    std::cout<<"ClapTrap destructor has been called for "<< Name << std::endl;
+    std::cout<<"ClapTrap destructor has been called"<<std::endl;
 }
  
