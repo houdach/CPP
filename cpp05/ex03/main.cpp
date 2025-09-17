@@ -1,60 +1,76 @@
 #include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
+#include "AForm.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 
 int main() {
-    std::srand(std::time(nullptr)); // Seed for randomness
-
+    std::srand(std::time(nullptr));
+    
     Bureaucrat bob("Bob", 50);
     Bureaucrat alice("Alice", 1);
     Bureaucrat john("John", 150);
+    Intern huda;
 
-    ShrubberyCreationForm shrubbery("home");
-    RobotomyRequestForm robotomy("Bender");
-    PresidentialPardonForm pardon("Marvin");
+    AForm* shrubbery = huda.makeForm("shrubbery creation", "home");
+    AForm* robotomy  = huda.makeForm("robotomy request", "Bender");
+    AForm* pardon    = huda.makeForm("presidential pardon", "Marvin");
+    AForm* unknown   = huda.makeForm("coffee form", "Kitchen");
 
     try {
-        bob.signForm(shrubbery);
-        bob.executeForm(shrubbery);
+        bob.signForm(*shrubbery);
+        bob.executeForm(*shrubbery);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
-        john.signForm(robotomy);  // John grade 150, should fail signing
+        john.signForm(*robotomy); 
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
-        alice.signForm(robotomy);
-        alice.executeForm(robotomy);
+        alice.signForm(*robotomy);
+        alice.executeForm(*robotomy);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
-        bob.signForm(pardon);     // Bob grade 50, too low to sign (needs 25)
+        bob.signForm(*pardon);  
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
-        alice.signForm(pardon);
-        bob.executeForm(pardon);  // Bob grade 50, too low to execute (needs 5)
+        alice.signForm(*pardon);
+        bob.executeForm(*pardon); 
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
-        alice.executeForm(pardon);
+        alice.executeForm(*pardon);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
+    
+    try
+    {
+        AForm *robotomy1 = huda.makeForm("shrubbery creation", "home");
+        alice.executeForm(*robotomy1);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    
+    delete shrubbery;
+    delete robotomy;
+    delete pardon;
+    delete unknown;
 
     return 0;
 }

@@ -9,11 +9,14 @@ private:
     std::string target;
 
 public:
-    RobotomyRequestForm(const std::string& target);
+    RobotomyRequestForm(); 
+    RobotomyRequestForm(const std::string& target); 
+    RobotomyRequestForm(const RobotomyRequestForm& other); 
+    RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
     ~RobotomyRequestForm();
 
 protected:
-    void executeAction(Bureaucrat const & executor) const ;
+    void executeAction(Bureaucrat const & executor) const;
 };
 
 #endif

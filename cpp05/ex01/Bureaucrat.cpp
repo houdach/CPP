@@ -37,7 +37,7 @@ Bureaucrat::~Bureaucrat()
     std::cout << "destructor called "  << std::endl;
 }
 
-std::string Bureaucrat::getName() const
+const std::string& Bureaucrat::getName() const
 {
     return(name);
 }
@@ -62,16 +62,16 @@ void Bureaucrat::decrementGrade()
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
-    return "Grade too high!";
+    return "BureaucratException : Grade too high!";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-    return "Grade too low!";
+    return "BureaucratException:Grade too low!";
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& b)
 {
-    std::cout<<b.getName()<<", bureaucrat grade "<<b.getGrade()<<std::endl;
+    out<<b.getName()<<", bureaucrat grade "<<b.getGrade()<<std::endl;
     return out;
 }
 

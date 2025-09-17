@@ -1,6 +1,6 @@
  #include "Bureaucrat.hpp"
  #include <exception>
- #include "Form.hpp"
+
 
 Bureaucrat::Bureaucrat(): name("Default"), grade(150) 
 {
@@ -37,7 +37,7 @@ Bureaucrat::~Bureaucrat()
     std::cout << "destructor called "  << std::endl;
 }
 
-std::string Bureaucrat::getName() const
+const std::string& Bureaucrat::getName() const
 {
     return(name);
 }
@@ -71,7 +71,7 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& b)
 {
-    std::cout<<b.getName()<<", bureaucrat grade "<<b.getGrade()<<std::endl;
+     out << b.getName() << ", bureaucrat grade " << b.getGrade();
     return out;
 }
 

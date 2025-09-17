@@ -7,7 +7,7 @@
 #include <ctime>
 
 int main() {
-    std::srand(std::time(nullptr)); // Seed for randomness
+     std::srand(std::time(nullptr));
 
     Bureaucrat bob("Bob", 50);
     Bureaucrat alice("Alice", 1);
@@ -25,7 +25,7 @@ int main() {
     }
 
     try {
-        john.signForm(robotomy);  // John grade 150, should fail signing
+        john.signForm(robotomy);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
@@ -38,14 +38,14 @@ int main() {
     }
 
     try {
-        bob.signForm(pardon);     // Bob grade 50, too low to sign (needs 25)
+        bob.signForm(pardon);
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
 
     try {
         alice.signForm(pardon);
-        bob.executeForm(pardon);  // Bob grade 50, too low to execute (needs 5)
+        bob.executeForm(pardon); 
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;
     }
@@ -56,5 +56,11 @@ int main() {
         std::cerr << e.what() << std::endl;
     }
 
+    try {
+    ShrubberyCreationForm tmp("garden");
+    alice.executeForm(tmp); 
+    } catch (std::exception &e) {
+    std::cerr << e.what() << std::endl;
+}
     return 0;
 }

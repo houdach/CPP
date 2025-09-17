@@ -17,26 +17,36 @@ Intern& Intern::operator=(const Intern& other) {
 
 Intern::~Intern() {}
 
+static AForm* createShrubbery(const std::string& t) {
+    return new ShrubberyCreationForm(t);
+}
+static AForm* createRobotomy(const std::string& t) {
+    return new RobotomyRequestForm(t);
+}
+static AForm* createPresidential(const std::string& t) {
+    return new PresidentialPardonForm(t);
+}
+
 AForm* Intern::makeForm(const std::string& formName, const std::string& target) const {
-    
     struct FormEntry {
-        std::string name;
-        AForm* (*create)(const std::string& target);
+        const char* name;
+        AForm* (*create)(const std::string&);
     };
 
     static FormEntry forms[] = {
-        {"shrubbery creation", [](const std::string& t) -> AForm* { return new ShrubberyCreationForm(t); }},
-        {"robotomy request",   [](const std::string& t) -> AForm* { return new RobotomyRequestForm(t); }},
-        {"presidential pardon",[](const std::string& t) -> AForm* { return new PresidentialPardonForm(t); }}
+        { "shrubbery creation",   &createShrubbery },
+        { "robotomy request",     &createRobotomy },
+        { "presidential pardon",  &createPresidential }
     };
 
-    for (size_t i = 0; i < sizeof(forms)/sizeof(FormEntry); i++) {
+    const size_t n = sizeof(forms) / sizeof(forms[0]);
+    for (size_t i = 0; i < n; ++i) {
         if (formName == forms[i].name) {
-            std::cout << "Intern creates " << formName << std::endl;
+            std::cout << "Intern creates " << forms[i].name << std::endl;
             return forms[i].create(target);
         }
     }
 
-    std::cout << "Intern couldn't find the form named \"" << formName << "\"." << std::endl;
-    return nullptr;
+    std::cerr << "Intern couldn't find the form named \"" << formName << "\"." << std::endl;
+    return NULL; 
 }

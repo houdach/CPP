@@ -5,7 +5,6 @@ int main()
     try {
         Bureaucrat b1("Alice", 42);
         std::cout << b1 << std::endl;
-
         b1.incrementGrade();
         std::cout << "After increment: " << b1 << std::endl;
 

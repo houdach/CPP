@@ -1,7 +1,7 @@
 #include "AForm.hpp"
 
 AForm::AForm()
-    : name("DefaultForm"), isSigned(false), gradeTosign(1), gradeToexecute(1) {}
+    : name("DefaultForm"), isSigned(false), gradeTosign(150), gradeToexecute(150) {}
 
 AForm::AForm(const std::string& name, int gradeTosign, int gradeToexecute)
     : name(name), isSigned(false), gradeTosign(gradeTosign), gradeToexecute(gradeToexecute) {
@@ -25,7 +25,7 @@ AForm& AForm::operator=(const AForm& other) {
 
 AForm::~AForm() {}
 
-std::string AForm::getName() const {
+const std::string& AForm::getName() const {
     return name;
 }
 

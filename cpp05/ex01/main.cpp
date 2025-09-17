@@ -14,9 +14,9 @@ int main() {
         std::cout << taxForm << std::endl;
         std::cout << vacationForm << std::endl;
 
-        alice.signForm(taxForm);       // should succeed
-        bob.signForm(taxForm);         // should fail
-        bob.signForm(vacationForm);    // should succeed
+        alice.signForm(taxForm);       
+        bob.signForm(taxForm);         
+        bob.signForm(vacationForm);   
 
         std::cout << taxForm << std::endl;
         std::cout << vacationForm << std::endl;

@@ -21,7 +21,7 @@ public:
     AForm& operator=(const AForm& other);
     virtual ~AForm();
 
-    std::string getName() const;
+    const std::string& getName() const;
     bool getSigned() const;
     int getGradeTosign() const;
     int getGradeToexecute() const;

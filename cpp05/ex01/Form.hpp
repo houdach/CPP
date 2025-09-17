@@ -11,20 +11,20 @@ class Form {
 private:
     const std::string name;
     bool isSigned;
-    const int gradeTosign;
-    const int gradeToexecute;
+    const int signGrade;
+    const int execGrade;
 
 public:
     Form();
-    Form(const std::string& name, int gradeTosign, int gradeToexecute);
+    Form(const std::string& name, int signGrade, int execGrade);
     Form(const Form& other);
     Form& operator=(const Form& other);
     ~Form();
 
    
-    std::string getName() const;
+    const std::string& getName() const;
     bool getSigned() const;
-    int getGradeTosign() const;
+    int getsignGrade() const;
     int getGradeToexecute() const;
 
     void beSigned(const Bureaucrat& b); 

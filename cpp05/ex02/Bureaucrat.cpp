@@ -1,7 +1,10 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
 
-Bureaucrat::Bureaucrat() : name("Default"), grade(150) {}
+Bureaucrat::Bureaucrat() : name("Default"), grade(150) 
+{
+    std::cout<<"default constructor has been called"<<std::endl;
+}
 
 Bureaucrat::Bureaucrat(const std::string& name, int grade) : name(name) {
     if (grade < 1)
@@ -12,12 +15,16 @@ Bureaucrat::Bureaucrat(const std::string& name, int grade) : name(name) {
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other)
-    : name(other.name), grade(other.grade) {}
+    : name(other.name), grade(other.grade)
+{
+    std::cout << "Copy constructor called for " << name << std::endl;
+}
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
     if (this != &other) {
         this->grade = other.grade;
     }
+    std::cout << "Copy assignment operator called for " << this->name << std::endl;
     return *this;
 }
 
