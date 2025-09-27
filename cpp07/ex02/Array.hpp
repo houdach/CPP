@@ -7,7 +7,7 @@
 template <typename T>
 class Array {
 private:
-    T* _data;
+    T* data;
     unsigned int _size;
 
 public:
@@ -20,7 +20,7 @@ public:
     const T& operator[](unsigned int index) const;
     unsigned int size() const;
 };
-
 #include "Array.tpp"
+
 
 #endif

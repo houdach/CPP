@@ -11,15 +11,14 @@ int main() {
         std::cout << arr1[i] << " ";
     std::cout << std::endl;
 
-    Array<int> arr2 = arr1;  // copy constructor
-    arr2[0] = 999;           // should not affect arr1
+    Array<int> arr2 = arr1; 
+    arr2[0] = 999;          
 
     std::cout << "arr1 after arr2 modified: ";
     for (unsigned int i = 0; i < arr1.size(); i++)
         std::cout << arr1[i] << " ";
     std::cout << std::endl;
 
-    // Test out-of-bounds
     try {
         arr1[10] = 5;
     } catch (std::exception &e) {
@@ -35,6 +34,9 @@ int main() {
     for (unsigned int i = 0; i < strArr.size(); i++)
         std::cout << strArr[i] << " ";
     std::cout << std::endl;
+    const Array<std::string> constArr = strArr;
+    std::string x = constArr[0];
+     std::cout << "String const array: "<< x <<std::endl;
     
     return 0;
 }
