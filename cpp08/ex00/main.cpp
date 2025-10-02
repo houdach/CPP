@@ -18,7 +18,7 @@ int main()
         it = easyfind(vec, 100);
         std::cout << "Found : " << *it << std::endl; 
     } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::cout << "vector error :" << e.what() << std::endl;
     }
 
 
@@ -33,7 +33,7 @@ int main()
     }
     catch (const std::exception& e) 
     {
-        std::cout << e.what() << std::endl;
+        std::cout << "list error :" << e.what() << std::endl;
     }
 
 
@@ -49,7 +49,7 @@ int main()
         it = easyfind(deq, 10); 
         std::cout << "Found 10 in deque: " << *it << std::endl;
     } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::cout << "deque error :" << e.what() << std::endl;
     }
 
 
@@ -58,7 +58,20 @@ int main()
         std::vector<int>::iterator it = easyfind(emptyV, 1);
         std::cout << "Found in empty vector: " << *it << std::endl;
     } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::cout << "empty vector error :" << e.what() << std::endl;
+    }
+
+    const int arr[8] = {1,56,89,6,4,0,10,100};
+    const std::vector<int> constvec(arr, arr + 8);
+    try
+    {
+        const std::vector<int>::const_iterator it = easyfind(constvec, 89);
+        std::cout << "Found in const vector: " << *it << std::endl;
+
+    }
+    catch(const std::exception& e) 
+    {
+        std::cout <<"const vector error :" << e.what() << std::endl;
     }
 
 }
