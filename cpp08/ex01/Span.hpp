@@ -3,32 +3,37 @@
 
 #include <vector>
 #include <stdexcept>
-#include <algorithm> // for sort, min_element, etc.
+#include <algorithm> 
+#include <iostream>
 
 class Span
 {
 private:
-    unsigned int _N;                 // Maximum capacity
-    std::vector<int> _numbers;       // Container to store integers
+    unsigned int N;                 
+    std::vector<int> numbers;
 
 public:
-    // Constructor / Destructor
     Span(unsigned int N);
     ~Span();
 
-    // Copy constructor and assignment operator
     Span(const Span& other);
     Span& operator=(const Span& other);
 
-    // Add numbers
-    void addNumber(int number); // add a single number
+    void addNumber(int number); 
 
-    template <typename InputIt>
-    void addNumber(InputIt begin, InputIt end); // add a range of numbers
-
-    // Compute spans
     int shortestSpan() const;
     int longestSpan() const;
+
+    template <typename InputIt>
+    void addRNumber(InputIt begin, InputIt end)
+{
+    size_t rangeSize = std::distance(begin, end);
+
+    if (numbers.size() + rangeSize > N)
+        throw std::overflow_error("Span is full");
+
+    numbers.insert(numbers.end(), begin, end);
+}
 };
 
 #endif
