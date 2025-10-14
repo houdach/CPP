@@ -9,8 +9,8 @@
 class PmergeMe
 {
 private:
-    std::vector<int> _vectorData;
-    std::deque<int>  _dequeData;
+    std::vector<int> vectorData;
+    std::deque<int>  dequeData;
 
     void mergeInsertSortVector(std::vector<int> &vec);
     void mergeInsertSortDeque(std::deque<int> &dq);

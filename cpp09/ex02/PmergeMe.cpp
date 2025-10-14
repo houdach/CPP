@@ -8,13 +8,13 @@
 PmergeMe::PmergeMe() {}
 PmergeMe::~PmergeMe() {}
 PmergeMe::PmergeMe(const PmergeMe &other) 
-    : _vectorData(other._vectorData), _dequeData(other._dequeData) {}
+    : vectorData(other.vectorData), dequeData(other.dequeData) {}
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
     if (this != &other)
     {
-        _vectorData = other._vectorData;
-        _dequeData  = other._dequeData;
+        vectorData = other.vectorData;
+        dequeData  = other.dequeData;
     }
     return *this;
 }
@@ -43,8 +43,8 @@ bool PmergeMe::loadData(int argc, char* argv[])
             std::cerr << "Error" << std::endl;
             return false;
         }
-        _vectorData.push_back(value);
-        _dequeData.push_back(value);
+        vectorData.push_back(value);
+        dequeData.push_back(value);
     }
     return true;
 }
@@ -124,16 +124,16 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int> &dq)
 void PmergeMe::sortAndDisplay()
 {
     std::cout << "Before: ";
-    for (size_t i = 0; i < _vectorData.size(); ++i)
-        std::cout << _vectorData[i] << " ";
+    for (size_t i = 0; i < vectorData.size(); ++i)
+        std::cout << vectorData[i] << " ";
     std::cout << std::endl;
 
-    std::vector<int> vecCopy = _vectorData;
+    std::vector<int> vecCopy = vectorData;
     clock_t startVec = clock();
     mergeInsertSortVector(vecCopy);
     clock_t endVec = clock();
 
-    std::deque<int> dqCopy = _dequeData;
+    std::deque<int> dqCopy = dequeData;
     clock_t startDq = clock();
     mergeInsertSortDeque(dqCopy);
     clock_t endDq = clock();
