@@ -8,7 +8,7 @@
 class RPN
 {
 private:
-    std::stack<int> _stack;
+    std::stack<int> stack;
 
     bool isOperator(const std::string &token) const;
     bool isNumber(const std::string &token) const;

@@ -5,11 +5,11 @@
 
 RPN::RPN() {}
 RPN::~RPN() {}
-RPN::RPN(const RPN &other) : _stack(other._stack) {}
+RPN::RPN(const RPN &other) : stack(other.stack) {}
 RPN &RPN::operator=(const RPN &other)
 {
     if (this != &other)
-        _stack = other._stack;
+        stack = other.stack;
     return *this;
 }
 
@@ -35,8 +35,7 @@ int RPN::applyOperator(const std::string &op, int a, int b) const
     {
         if (b == 0)
         {
-            std::cerr << "Error: division by zero" << std::endl;
-            return 0;
+            throw std::runtime_error("Error: division by zero");
         }
         return a / b;
     }
@@ -45,7 +44,7 @@ int RPN::applyOperator(const std::string &op, int a, int b) const
 
 bool RPN::evaluate(const std::string &expression, int &result)
 {
-    _stack = std::stack<int>();
+    stack = std::stack<int>();
 
     std::istringstream iss(expression);
     std::string token;
@@ -54,19 +53,26 @@ bool RPN::evaluate(const std::string &expression, int &result)
     {
         if (isNumber(token))
         {
-            _stack.push(atoi(token.c_str()));
+            stack.push(atoi(token.c_str()));
         }
         else if (isOperator(token))
         {
-            if (_stack.size() < 2)
+            if (stack.size() < 2)
             {
                 std::cerr << "Error" << std::endl;
                 return false;
             }
-            int b = _stack.top(); _stack.pop();
-            int a = _stack.top(); _stack.pop();
-            int res = applyOperator(token, a, b);
-            _stack.push(res);
+            int b = stack.top(); stack.pop();
+            int a = stack.top(); stack.pop();
+            try {
+                int res = applyOperator(token, a, b);
+                stack.push(res);
+            } 
+            catch (const std::exception& e) 
+            {
+                std::cerr << e.what() << std::endl;
+                return false;
+            }
         }
         else
         {
@@ -75,12 +81,12 @@ bool RPN::evaluate(const std::string &expression, int &result)
         }
     }
 
-    if (_stack.size() != 1)
+    if (stack.size() != 1)
     {
         std::cerr << "Error" << std::endl;
         return false;
     }
 
-    result = _stack.top();
+    result = stack.top();
     return true;
 }
