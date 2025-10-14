@@ -45,11 +45,14 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
     else 
     {
         std::cerr << "Error: Unable to open file " << std::endl;
+        return ;
     }
 }
 
 void BitcoinExchange::processInput(const std::string &filename)
 {
+    if(database.empty())
+        return ; 
     std::ifstream inputFile(filename);
     if(inputFile.is_open())
     {
@@ -70,6 +73,16 @@ void BitcoinExchange::processInput(const std::string &filename)
     }
 }
 
+ static std::string trim(const std::string& str)
+    {
+        size_t start = str.find_first_not_of(" \t\n\r");
+        if (start == std::string::npos)
+            return "";
+
+        size_t end = str.find_last_not_of(" \t\n\r");
+        return str.substr(start, end - start + 1);
+    }
+
 void BitcoinExchange::processLine(const std::string &line)
 {
     size_t sep = line.find('|');
@@ -81,6 +94,11 @@ void BitcoinExchange::processLine(const std::string &line)
     }
     std::string date = trim(line.substr(0, sep));
     std::string valueStr = trim(line.substr(sep + 1));
+    if (date.empty() || valueStr.empty())
+    {
+        std::cerr << "Error: bad input => " << line << std::endl;
+        return;
+    }
     if(!isValidDate(date))
     {
         std::cerr << "Error: bad input => " << line << std::endl;
@@ -91,6 +109,8 @@ void BitcoinExchange::processLine(const std::string &line)
         return;
     }
     double rate = getExchangeRate(date);
+    if  (rate == -1)
+        return;
     printResult(date, value, rate);
 }
 
@@ -103,16 +123,20 @@ bool BitcoinExchange::isValidValue(const std::string &valueStr, double &value)co
         if (c == '.')
         {
             dotCount++;
-            if (dotCount > 1)
+            if (dotCount > 1 || (dotCount == 1 && valueStr[i+1] == '\0'))
+            {
+                std::cerr << "Error: not a valid number." << std::endl;
                 return false;
+            }
         }
         else if (c == '-')
         {
-            if (i != 0)
+            std::cerr << "Error: not a positive number." << std::endl;
                 return false;
         }
         else if (!std::isdigit(c) && c != ' ')
         {
+             std::cerr << "Error: not a digit." << std::endl;
             return false;
         }
     }
@@ -169,7 +193,7 @@ double BitcoinExchange::getExchangeRate(const std::string &date) const
     if (it == database.begin())
     {
         std::cerr << "Error: no earlier date found for => " << date << std::endl;
-        return 0.0;
+        return -1;
     }
     --it;
     return it->second;
@@ -178,14 +202,4 @@ double BitcoinExchange::getExchangeRate(const std::string &date) const
 void BitcoinExchange::printResult(const std::string &date, double value, double rate) const
 {
     std::cout << date << " => " << value << " = " << value * rate <<std::endl;
-}
-
-static std::string trim(const std::string& str)
-{
-    size_t start = str.find_first_not_of(" \t\n\r");
-    if (start == std::string::npos)
-        return "";
-
-    size_t end = str.find_last_not_of(" \t\n\r");
-    return str.substr(start, end - start + 1);
 }

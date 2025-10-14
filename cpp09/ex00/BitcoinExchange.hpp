@@ -25,6 +25,4 @@ public:
     void processInput(const std::string &filename);
 
 };
-static std::string trim(const std::string& str);
-
 #endif
