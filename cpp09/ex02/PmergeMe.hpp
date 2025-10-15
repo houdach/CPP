@@ -12,11 +12,12 @@ private:
     std::vector<int> vectorData;
     std::deque<int>  dequeData;
 
-    void mergeInsertSortVector(std::vector<int> &vec);
-    void mergeInsertSortDeque(std::deque<int> &dq);
+    void mergeInsertSortVector();
+    void mergeInsertSortDeque();
 
-    void mergeVector(std::vector<int> &vec, int left, int mid, int right);
-    void mergeDeque(std::deque<int> &dq, int left, int mid, int right);
+    int jacobsthal(int n) const;
+    void insertPendingVector(std::vector<int> &mainChain, const std::vector<int> &pendingChain);
+    void insertPendingDeque(std::deque<int> &mainChain, const std::deque<int> &pendingChain);
 
     bool isValidNumber(const std::string &str) const;
 
