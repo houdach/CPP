@@ -58,20 +58,12 @@ int PmergeMe::jacobsthal(int n) const
 
 void PmergeMe::insertPendingVector(std::vector<int> &mainChain, const std::vector<int> &pendingChain)
 {
-    for (size_t i = 0; i < pendingChain.size(); ++i)
-    {
-        std::vector<int>::iterator pos = std::lower_bound(mainChain.begin(), mainChain.end(), pendingChain[i]);
-        mainChain.insert(pos, pendingChain[i]);
-    }
+    insertPendingGeneric(mainChain, pendingChain, *this);
 }
 
 void PmergeMe::insertPendingDeque(std::deque<int> &mainChain, const std::deque<int> &pendingChain)
 {
-    for (size_t i = 0; i < pendingChain.size(); ++i)
-    {
-        std::deque<int>::iterator pos = std::lower_bound(mainChain.begin(), mainChain.end(), pendingChain[i]);
-        mainChain.insert(pos, pendingChain[i]);
-    }
+    insertPendingGeneric(mainChain, pendingChain, *this);
 }
 
 void PmergeMe::mergeInsertSortVector()
