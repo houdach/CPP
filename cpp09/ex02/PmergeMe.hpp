@@ -5,6 +5,7 @@
 #include <vector>
 #include <deque>
 #include <string>
+#include <algorithm>
 
 class PmergeMe
 {
@@ -30,36 +31,38 @@ public:
     void sortAndDisplay();
 
     template <typename Container>
-    void insertPendingGeneric(Container &mainChain, const Container &pendingChain, const PmergeMe &pm)
+    void insertPendingGeneric(Container &mainChain, const Container &pendingChain)
     {
         int size = pendingChain.size();
+        if (size == 0) return;
+
+        Container copyPending = pendingChain;
+
         std::vector<int> order;
-        int k = 1;
-        while (pm.jacobsthal(k) < size)
+        int k = 0;
+        while (true)
         {
-            order.push_back(pm.jacobsthal(k));
+            int j = jacobsthal(k);
+            if (j >= size) break;
+            if (order.empty() || order.back() != j)
+                order.push_back(j);
             ++k;
         }
-
-        std::vector<bool> used(size + 1, false);
-        for (size_t i = 0; i < order.size(); ++i)
-            used[order[i]] = true;
-
-        for (int i = 1; i <= size; ++i)
+        std::vector<bool> used(size, false);
+        for (size_t i = 0; i < order.size(); ++i) used[order[i]] = true;
+        for (int i = 0; i < size; ++i)
             if (!used[i])
                 order.push_back(i);
 
         for (size_t i = 0; i < order.size(); ++i)
         {
-            int idx = order[i] - 1;
-            if (idx >= 0 && idx < size)
-            {
-                typename Container::iterator pos =
-                    std::lower_bound(mainChain.begin(), mainChain.end(), pendingChain[idx]);
-                mainChain.insert(pos, pendingChain[idx]);
-            }
+            int idx = order[i];
+            typename Container::iterator pos =
+                std::lower_bound(mainChain.begin(), mainChain.end(), copyPending[idx]);
+            mainChain.insert(pos, copyPending[idx]);
         }
     }
+
 };
 
 #endif
